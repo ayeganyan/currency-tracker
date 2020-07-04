@@ -1,5 +1,6 @@
 package com.ayeganyan.currencytracker.controller;
 
+import com.ayeganyan.currencytracker.exception.BadRequestException;
 import com.ayeganyan.currencytracker.exception.NotFoundException;
 import com.ayeganyan.currencytracker.model.CurrencyRate;
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class CurrencyControllerTest {
         assertEquals(EUR, body.getTo());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = BadRequestException.class)
     public void getLatestNonExistingRate() {
         currencyController.getLatestCurrencyRate(CAD, USD);
     }
