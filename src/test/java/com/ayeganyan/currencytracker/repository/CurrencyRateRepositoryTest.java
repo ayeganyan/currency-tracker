@@ -1,5 +1,6 @@
 package com.ayeganyan.currencytracker.repository;
 
+import com.ayeganyan.currencytracker.exception.NotFoundException;
 import com.ayeganyan.currencytracker.model.CurrencyRateEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.ayeganyan.currencytracker.Constants.CAD;
 import static com.ayeganyan.currencytracker.Constants.DATE_FORMAT;
 import static com.ayeganyan.currencytracker.Constants.EUR;
 import static com.ayeganyan.currencytracker.Constants.USD;
@@ -32,7 +34,7 @@ public class CurrencyRateRepositoryTest {
     private CurrencyRateRepository currencyRateRepository;
 
     @Test
-    public void findTopByFromAndToOrderByTimestampDesc() {
+    public void getLatestRate() {
         CurrencyRateEntity currencyRateEntity = new CurrencyRateEntity();
         currencyRateEntity.setFrom(USD);
         currencyRateEntity.setTo(EUR);
@@ -43,6 +45,13 @@ public class CurrencyRateRepositoryTest {
         CurrencyRateEntity latestGet = latestOpt.get();
         assertNotNull(latestGet);
         assertEquals(latestSaved.getId(), latestGet.getId());
+    }
+
+    @Test()
+    public void getNonExistingCurrencyRate(){
+        Optional<CurrencyRateEntity> latestRateOpt =
+                currencyRateRepository.findTopByFromAndToOrderByTimestampDesc(CAD, EUR);
+        assertFalse(latestRateOpt.isPresent());
     }
 
     @Test

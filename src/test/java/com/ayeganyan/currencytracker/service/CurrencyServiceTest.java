@@ -1,5 +1,6 @@
 package com.ayeganyan.currencytracker.service;
 
+import com.ayeganyan.currencytracker.exception.NotFoundException;
 import com.ayeganyan.currencytracker.model.CurrencyRate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import static com.ayeganyan.currencytracker.Constants.CAD;
 import static com.ayeganyan.currencytracker.Constants.DATE_FORMAT;
 import static com.ayeganyan.currencytracker.Constants.EUR;
 import static com.ayeganyan.currencytracker.Constants.USD;
@@ -41,6 +43,11 @@ public class CurrencyServiceTest {
         assertEquals(EUR, currencyRate.getTo());
         assertEquals((Double) 2.0, currencyRate.getRate());
         assertNotNull(currencyRate.getTimestamp());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getNonExistingCurrency(){
+        currencyService.getLatestCurrencyRate(CAD, EUR);
     }
 
     @Test
