@@ -1,5 +1,8 @@
 package com.ayeganyan.currencytracker.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class CurrencyRate {
@@ -13,12 +16,18 @@ public class CurrencyRate {
         );
     }
 
+    @NotNull
+    @Size(min = 3, max = 3, message = "Currency code should have size of 3")
     private String from;
 
+    @NotNull
+    @Size(min = 3, max = 3, message = "Currency code should have size of 3")
     private String to;
 
+    @NotNull
     private Double rate;
 
+    @PastOrPresent
     private Date timestamp;
 
     public CurrencyRate(String from, String to, double rate, Date timestamp) {

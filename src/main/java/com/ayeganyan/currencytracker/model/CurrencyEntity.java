@@ -11,7 +11,11 @@ public class CurrencyEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "code")
+    @Column(name = "code",
+            length = 3,
+            unique = true,
+            nullable = false
+    )
     private String code;
 
     public CurrencyEntity() {

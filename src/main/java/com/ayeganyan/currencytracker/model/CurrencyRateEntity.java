@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Currency;
 import java.util.Date;
 
@@ -33,6 +35,7 @@ public class CurrencyRateEntity {
     @Column(name = "timestamp", updatable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
+    @PastOrPresent
     private Date timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -44,6 +47,7 @@ public class CurrencyRateEntity {
     private CurrencyEntity toCurrency;
 
     @Column(name = "rate")
+    @NotNull
     private Double rate;
 
     public CurrencyRateEntity() {
