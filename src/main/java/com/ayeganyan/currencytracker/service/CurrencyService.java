@@ -1,5 +1,6 @@
 package com.ayeganyan.currencytracker.service;
 
+import com.ayeganyan.currencytracker.exception.BadRequestException;
 import com.ayeganyan.currencytracker.exception.NotFoundException;
 import com.ayeganyan.currencytracker.model.CurrencyEntity;
 import com.ayeganyan.currencytracker.model.CurrencyRate;
@@ -9,6 +10,7 @@ import com.ayeganyan.currencytracker.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,11 +38,6 @@ public class CurrencyService {
         return CurrencyRate.from(latestRateEntity);
     }
 
-    private CurrencyEntity retrieveCurrencyEntity(String code) {
-        return currencyRepository.findByCode(code)
-                .orElseThrow(() -> new NotFoundException(format("can not find currency with code %s", code)));
-    }
-
     public CurrencyRate addCurrencyRate(String fromCurrency, String toCurrency, Double rate) {
         CurrencyRateEntity currencyRateEntity = new CurrencyRateEntity();
 
@@ -56,15 +53,21 @@ public class CurrencyService {
         CurrencyEntity fromCurrencyEntity = retrieveCurrencyEntity(fromCurrency);
         CurrencyEntity toCurrencyEntity = retrieveCurrencyEntity(toCurrency);
 
+        Date finalToDate = toDate != null ? toDate : Calendar.getInstance().getTime();
         List<CurrencyRateEntity> currencyRateEntityRange = currencyRateRepository.
                 findAllByTimestampAfterAndTimestampBeforeAndFromCurrencyAndToCurrencyOrderByTimestampAsc(
-                fromDate, toDate, fromCurrencyEntity, toCurrencyEntity
+                fromDate, finalToDate, fromCurrencyEntity, toCurrencyEntity
         ).orElseThrow(() -> new NotFoundException(
                 format("No data for currency rate %s:%s for time range [%s -> %s]",
-                        fromCurrency, toCurrency, fromDate.toString(), toDate.toString())));
+                        fromCurrency, toCurrency, fromDate.toString(), finalToDate.toString())));
 
         return currencyRateEntityRange.stream()
                 .map(CurrencyRate::from)
                 .collect(toList());
+    }
+
+    private CurrencyEntity retrieveCurrencyEntity(String code) {
+        return currencyRepository.findByCode(code.toUpperCase())
+                .orElseThrow(() -> new BadRequestException(format("can not find currency with code %s", code)));
     }
 }

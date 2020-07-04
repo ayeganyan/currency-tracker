@@ -31,4 +31,13 @@ public class CustomizedExceptionHandler {
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public final ResponseEntity<Object> handleNotFoundExceptions(
+            BadRequestException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

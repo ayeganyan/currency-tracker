@@ -1,10 +1,16 @@
 package com.ayeganyan.currencytracker.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@ApiModel(description = "Represents model for currency rate")
 public class CurrencyRate {
 
     public static CurrencyRate from(CurrencyRateEntity entity) {
@@ -40,6 +46,12 @@ public class CurrencyRate {
     public CurrencyRate() {
     }
 
+    @ApiModelProperty(
+            value = "Code of base currency of conversion",
+            allowableValues = "USD,EUR,GBP",
+            example = "USD",
+            required = true
+    )
     public String getFrom() {
         return from;
     }
@@ -48,6 +60,12 @@ public class CurrencyRate {
         this.from = from;
     }
 
+    @ApiModelProperty(
+            value = "Code of currency to convert",
+            allowableValues = "USD,EUR,GBP",
+            example = "EUR",
+            required = true
+    )
     public String getTo() {
         return to;
     }
@@ -56,6 +74,11 @@ public class CurrencyRate {
         this.to = to;
     }
 
+    @ApiModelProperty(
+            value = "Conversion rate",
+            example = "1.2",
+            required = true
+    )
     public Double getRate() {
         return rate;
     }
@@ -64,6 +87,9 @@ public class CurrencyRate {
         this.rate = rate;
     }
 
+    @ApiModelProperty(
+            value = "Actual time of conversion calculation"
+    )
     public Date getTimestamp() {
         return timestamp;
     }
