@@ -1,7 +1,6 @@
 package com.ayeganyan.currencytracker.service;
 
 import com.ayeganyan.currencytracker.model.CurrencyRate;
-import com.ayeganyan.currencytracker.model.CurrencyRateEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+import static com.ayeganyan.currencytracker.Constants.DATE_FORMAT;
 import static com.ayeganyan.currencytracker.Constants.EUR;
 import static com.ayeganyan.currencytracker.Constants.USD;
 import static org.junit.Assert.assertEquals;
@@ -37,5 +41,15 @@ public class CurrencyServiceTest {
         assertEquals(EUR, currencyRate.getTo());
         assertEquals((Double) 2.0, currencyRate.getRate());
         assertNotNull(currencyRate.getTimestamp());
+    }
+
+    @Test
+    @Sql("classpath:range_query.sql")
+    public void rangeQuery() throws ParseException {
+        Date fromDate = DATE_FORMAT.parse("2020-07-04 14:19:58.033");
+        Date toDate = DATE_FORMAT.parse("2020-07-04 14:53:58.033");
+        List<CurrencyRate> currencyRateForRange = currencyService.getCurrencyRateForRange(fromDate, toDate, USD, EUR);
+        assertNotNull(currencyRateForRange);
+        assertEquals(4, currencyRateForRange.size());
     }
 }

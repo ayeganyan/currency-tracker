@@ -11,9 +11,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.ayeganyan.currencytracker.Constants.DATE_FORMAT;
 import static com.ayeganyan.currencytracker.Constants.EUR;
 import static com.ayeganyan.currencytracker.Constants.USD;
 import static org.junit.Assert.*;
@@ -40,5 +43,17 @@ public class CurrencyRateRepositoryTest {
         CurrencyRateEntity latestGet = latestOpt.get();
         assertNotNull(latestGet);
         assertEquals(latestSaved.getId(), latestGet.getId());
+    }
+
+    @Test
+    @Sql("classpath:range_query.sql")
+    public void rangeQuery() throws ParseException {
+        Date fromDate = DATE_FORMAT.parse("2020-07-04 14:19:58.033");
+        Date toDate = DATE_FORMAT.parse("2020-07-04 14:53:58.033");
+        Optional<List<CurrencyRateEntity>> ratePointsOpt = currencyRateRepository.
+                findAllByTimestampAfterAndTimestampBeforeAndFromAndToOrderByTimestampAsc(fromDate, toDate, USD, EUR);
+        List<CurrencyRateEntity> ratePoints = ratePointsOpt.get();
+        assertNotNull(ratePoints);
+        assertEquals(4, ratePoints.size());
     }
 }
