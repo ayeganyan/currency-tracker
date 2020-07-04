@@ -68,7 +68,6 @@ public class CurrencyRateRepositoryTest {
     }
 
     @Test
-    @Sql("classpath:range_query.sql")
     public void rangeQuery() throws ParseException {
         Date fromDate = DATE_FORMAT.parse("2020-07-04 14:19:58.033");
         Date toDate = DATE_FORMAT.parse("2020-07-04 14:53:58.033");

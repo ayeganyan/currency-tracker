@@ -20,7 +20,7 @@ public class CurrencyController {
     private CurrencyService currencyService;
 
     @GetMapping("/v1/currency/from/{fromCurrency}/to/{toCurrency}/latest")
-    public ResponseEntity<CurrencyRate> getCurrencyRate(
+    public ResponseEntity<CurrencyRate> getLatestCurrencyRate(
             @PathVariable String fromCurrency,
             @PathVariable String toCurrency
     ) {
