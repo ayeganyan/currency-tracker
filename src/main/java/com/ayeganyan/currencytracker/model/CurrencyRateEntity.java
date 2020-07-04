@@ -6,13 +6,17 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.util.Currency;
 import java.util.Date;
 
 @Entity
@@ -31,11 +35,13 @@ public class CurrencyRateEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @Column(name = "fromCurrency")
-    private String from;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "fromCurrency_fk")
+    private CurrencyEntity fromCurrency;
 
-    @Column(name = "toCurrency")
-    private String to;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "toCurrency_fk")
+    private CurrencyEntity toCurrency;
 
     @Column(name = "rate")
     private Double rate;
@@ -59,20 +65,20 @@ public class CurrencyRateEntity {
         this.timestamp = timestamp;
     }
 
-    public String getFrom() {
-        return from;
+    public CurrencyEntity getFromCurrency() {
+        return fromCurrency;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromCurrency(CurrencyEntity fromCurrency) {
+        this.fromCurrency = fromCurrency;
     }
 
-    public String getTo() {
-        return to;
+    public CurrencyEntity getToCurrency() {
+        return toCurrency;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setToCurrency(CurrencyEntity to) {
+        this.toCurrency = to;
     }
 
     public Double getRate() {

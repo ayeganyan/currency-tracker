@@ -1,5 +1,6 @@
 package com.ayeganyan.currencytracker.repository;
 
+import com.ayeganyan.currencytracker.model.CurrencyEntity;
 import com.ayeganyan.currencytracker.model.CurrencyRateEntity;
 import org.springframework.data.repository.CrudRepository;
 
@@ -9,9 +10,9 @@ import java.util.Optional;
 
 public interface CurrencyRateRepository extends CrudRepository<CurrencyRateEntity, Long> {
 
-    Optional<CurrencyRateEntity> findTopByFromAndToOrderByTimestampDesc(String from, String to);
+    Optional<CurrencyRateEntity> findTopByFromCurrencyAndToCurrencyOrderByTimestampDesc(CurrencyEntity from, CurrencyEntity to);
 
-    Optional<List<CurrencyRateEntity>> findAllByTimestampAfterAndTimestampBeforeAndFromAndToOrderByTimestampAsc(
-            Date fromDate, Date toDate, String fromCurrency, String toCurrency
+    Optional<List<CurrencyRateEntity>> findAllByTimestampAfterAndTimestampBeforeAndFromCurrencyAndToCurrencyOrderByTimestampAsc(
+            Date fromDate, Date toDate, CurrencyEntity fromCurrency, CurrencyEntity toCurrency
     );
 }

@@ -5,7 +5,12 @@ import java.util.Date;
 public class CurrencyRate {
 
     public static CurrencyRate from(CurrencyRateEntity entity) {
-        return new CurrencyRate(entity.getFrom(), entity.getTo(), entity.getRate(), entity.getTimestamp());
+        return new CurrencyRate(
+                entity.getFromCurrency().getCode(),
+                entity.getToCurrency().getCode(),
+                entity.getRate(),
+                entity.getTimestamp()
+        );
     }
 
     private String from;
