@@ -41,8 +41,4 @@ public class CurrencyRateRepositoryTest {
         assertNotNull(latestGet);
         assertEquals(latestSaved.getId(), latestGet.getId());
     }
-
-    @Test
-    public void findAllByFromAndToOrOrderByTimestamp() {
-    }
 }

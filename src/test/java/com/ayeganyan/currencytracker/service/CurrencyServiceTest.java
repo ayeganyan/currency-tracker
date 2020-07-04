@@ -28,7 +28,7 @@ public class CurrencyServiceTest {
     private CurrencyService currencyService;
 
     @Test
-    public void getCurrencyRate() {
+    public void addGetCurrencyRate() {
         currencyService.addCurrencyRate(USD, EUR, 2.0);
 
         CurrencyRate currencyRate = currencyService.getLatestCurrencyRate(USD, EUR);
@@ -37,9 +37,5 @@ public class CurrencyServiceTest {
         assertEquals(EUR, currencyRate.getTo());
         assertEquals((Double) 2.0, currencyRate.getRate());
         assertNotNull(currencyRate.getTimestamp());
-    }
-
-    @Test
-    public void addCurrencyRate() {
     }
 }
