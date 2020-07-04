@@ -3,8 +3,10 @@ package com.ayeganyan.currencytracker.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name = "CurrencyEntity")
+@Entity
+@Table(name = "CurrencyEntity")
 public class CurrencyEntity {
 
     @Id
