@@ -10,13 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AuthGroupEntity")
+@Table(name = "auth_group_entity")
 public class AuthGroupEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "AuthGroup")
+    @Column(name = "auth_group")
     private String authGroup;
 
     @ManyToOne

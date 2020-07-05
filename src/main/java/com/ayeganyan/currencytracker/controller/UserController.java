@@ -1,6 +1,5 @@
 package com.ayeganyan.currencytracker.controller;
 
-import com.ayeganyan.currencytracker.model.CurrencyRate;
 import com.ayeganyan.currencytracker.model.User;
 import com.ayeganyan.currencytracker.service.UserService;
 import io.swagger.annotations.ApiOperation;

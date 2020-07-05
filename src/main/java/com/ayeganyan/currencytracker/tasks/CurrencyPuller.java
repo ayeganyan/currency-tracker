@@ -28,7 +28,7 @@ public class CurrencyPuller {
     @Autowired
     private CurrencyService currencyService;
 
-    @Scheduled(fixedRate = 5000L)
+    //@Scheduled(fixedRate = 5000L)
     void pullRate(){
         ExchangeRate exchangeRate = restTemplate.getForObject(
                 String.format("http://data.fixer.io/api/latest?access_key=%s&symbols=%s&base=%s",

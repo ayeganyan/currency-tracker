@@ -61,9 +61,9 @@ public class SecurityProvider extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/v1/user/signup")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, SWAGGER_URL, "/h2-console", "/h2-console/**")
-                .permitAll()
                 .antMatchers(HttpMethod.GET, "/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, SWAGGER_URL, "/h2-console", "/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic();

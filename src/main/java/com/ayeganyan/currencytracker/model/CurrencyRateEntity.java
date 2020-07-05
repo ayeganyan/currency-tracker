@@ -18,11 +18,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import java.util.Currency;
 import java.util.Date;
 
 @Entity
-@Table( name = "CurrencyRateEntity",
+@Table( name = "currency_rate_entity",
         indexes ={@Index(name = "timestamp_index", columnList = "timestamp", unique = false)})
 public class CurrencyRateEntity {
 
@@ -39,11 +38,11 @@ public class CurrencyRateEntity {
     private Date timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "fromCurrency_fk")
+    @JoinColumn(name = "from_currency_fk")
     private CurrencyEntity fromCurrency;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "toCurrency_fk")
+    @JoinColumn(name = "to_currency_fk")
     private CurrencyEntity toCurrency;
 
     @Column(name = "rate")

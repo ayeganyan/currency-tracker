@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
                 getPasswordEncoder().encode(user.getPassword()));
         User savedUser = User.from(userRepository.save(userEntity));
         savedUser.setPassword(null);
-        authGroupRepository.save(new AuthGroupEntity("USER", userEntity)); // TODO transaction
+        authGroupRepository.save(new AuthGroupEntity("ROLE_USER", userEntity)); // TODO transaction
 
         return savedUser;
     }
