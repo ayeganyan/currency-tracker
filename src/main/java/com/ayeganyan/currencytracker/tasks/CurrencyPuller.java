@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 public class CurrencyPuller {
 
-    @Value("${puller.accesstoken}")
+    @Value("${puller.fixer.accesstoken}")
     private String fixerToken;
 
     // The logic was not generalized because of API restriction, only EUR base allowed
@@ -30,11 +30,11 @@ public class CurrencyPuller {
 
     @Scheduled(fixedRate = 5000L)
     void pullRate(){
-        ExchangeRate exchangeRate = restTemplate.getForObject(
-                String.format("http://data.fixer.io/api/latest?access_key=%s&symbols=%s&base=%s",
-                        fixerToken, interestedCurrency, base),
-                ExchangeRate.class);
+        String url = String.format("http://data.fixer.io/api/latest?access_key=%s&symbols=%s&base=%s",
+                fixerToken, interestedCurrency, base);
+        ExchangeRate exchangeRate = restTemplate.getForObject(url,ExchangeRate.class);
         if(exchangeRate == null || !exchangeRate.getSuccess().equals("true")) {
+            System.out.println("Unable retrieve currency GET " + url);
             return;
         }
         Map<String, Double> rates = exchangeRate.getRates();
