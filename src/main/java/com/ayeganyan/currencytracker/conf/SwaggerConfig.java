@@ -22,8 +22,9 @@ public class SwaggerConfig {
 
     private static ApiInfo details() {
         return new ApiInfo(
-                "Communa Rest API",
-                "Represents an application for Communa application",
+                "Currency Tracker Rest API",
+                "Currency tracker application\n" +
+                        "Currently supported EUR and USD",
                 "1.0",
                 "Free to use",
                 new springfox.documentation.service.Contact(

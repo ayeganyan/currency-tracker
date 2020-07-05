@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_entity")
-public class UserEntity {
+@Table(name = "credential_entity")
+public class CredentialEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,10 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    public UserEntity() {
+    public CredentialEntity() {
     }
 
-    public UserEntity(String username, String password) {
+    public CredentialEntity(String username, String password) {
         this.username = username;
         this.password = password;
     }

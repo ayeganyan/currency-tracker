@@ -25,14 +25,14 @@ public class AuthGroupEntity {
             name = "user_fk",
             nullable = false
     )
-    private UserEntity userEntity;
+    private CredentialEntity credentialEntity;
 
     public AuthGroupEntity() {
     }
 
-    public AuthGroupEntity(String authGroup, UserEntity userEntity) {
+    public AuthGroupEntity(String authGroup, CredentialEntity credentialEntity) {
         this.authGroup = authGroup;
-        this.userEntity = userEntity;
+        this.credentialEntity = credentialEntity;
     }
 
     public Long getId() {
@@ -51,11 +51,11 @@ public class AuthGroupEntity {
         this.authGroup = authGroup;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public CredentialEntity getCredentialEntity() {
+        return credentialEntity;
     }
 
-    public void setUserEntity(UserEntity user) {
-        this.userEntity = user;
+    public void setCredentialEntity(CredentialEntity user) {
+        this.credentialEntity = user;
     }
 }
