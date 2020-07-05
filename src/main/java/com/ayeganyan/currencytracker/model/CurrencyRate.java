@@ -22,16 +22,20 @@ public class CurrencyRate {
 
     @NotNull
     @Size(min = 3, max = 3, message = "Currency code should have size of 3")
+    @ApiModelProperty(notes = "Code of currency to be converted")
     private String from;
 
     @NotNull
     @Size(min = 3, max = 3, message = "Currency code should have size of 3")
+    @ApiModelProperty(notes = "Code of currency to convert")
     private String to;
 
     @NotNull
+    @ApiModelProperty(notes = "Actual currency rate")
     private Double rate;
 
     @PastOrPresent
+    @ApiModelProperty(notes = "Timestamp of currency rate calculation")
     private Date timestamp;
 
     public CurrencyRate(String from, String to, double rate, Date timestamp) {

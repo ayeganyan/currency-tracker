@@ -1,6 +1,8 @@
 package com.ayeganyan.currencytracker.model;
 
-import javax.validation.constraints.NotNull;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class User {
@@ -9,11 +11,14 @@ public class User {
         return new User(userEntity.getUsername(), userEntity.getPassword());
     }
 
-    @NotNull
-    @Size(min = 3)
+    @NotEmpty(message = "Please provide username")
+    @Size(min = 3, message = "username should be at least 3 characters long")
+    @ApiModelProperty(notes = "User unique identifier", required = true, name = "Username")
     private String username;
 
-    @Size(min = 5)
+    @NotEmpty(message = "Please provide password")
+    @Size(min = 5, message = "Password should be at least 5 characters long")
+    @ApiModelProperty(notes = "User's password", required = true, name = "Password", hidden = true)
     private String password;
 
     public User(String username, String password) {

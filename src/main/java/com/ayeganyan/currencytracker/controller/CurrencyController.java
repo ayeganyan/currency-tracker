@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 import java.util.List;
 
@@ -67,12 +71,16 @@ public class CurrencyController {
             @ApiParam(value = "Currency code to convert", required = true)
             @PathVariable String toCurrency,
 
+            @Valid
             @ApiParam(value = "Start date of range (use ISO datetime format, e.g. 2000-10-31T01:30:00.000-05:00", required = true)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            @PastOrPresent
             @RequestParam Date fromDate,
 
+            @Valid
             @ApiParam(value = "End date of range, now if not specified (use ISO datetime format, e.g. 2000-10-31T01:30:00.000-05:00")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            @PastOrPresent
             @RequestParam(required = false) Date toDate
     ) {
         List<CurrencyRate> currencyRateForRange = currencyService
@@ -92,7 +100,7 @@ public class CurrencyController {
     })
     @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/v1/currency/from/{from}/to/{to}")
-    public ResponseEntity<Object> addCurrencyRate(
+    public ResponseEntity<CurrencyRate> addCurrencyRate(
             @ApiParam(value = "Currency code from which to convert", required = true)
             @PathVariable String from,
 
