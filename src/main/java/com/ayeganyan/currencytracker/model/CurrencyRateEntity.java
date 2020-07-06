@@ -34,7 +34,7 @@ public class CurrencyRateEntity {
     @Column(name = "timestamp", updatable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @PastOrPresent
+    @PastOrPresent(message = "Date is not in the past")
     private Date timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

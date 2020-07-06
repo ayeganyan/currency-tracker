@@ -28,7 +28,7 @@ public class CurrencyPuller {
     @Autowired
     private CurrencyService currencyService;
 
-    @Scheduled(fixedRate = 5000L)
+    @Scheduled(fixedRate = 50000L)
     void pullRate(){
         String url = String.format("http://data.fixer.io/api/latest?access_key=%s&symbols=%s&base=%s",
                 fixerToken, interestedCurrency, base);
