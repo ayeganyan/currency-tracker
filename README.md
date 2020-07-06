@@ -27,4 +27,4 @@ Note: Admin user admin/Admin@123 added by default
  - Group API urls in constants
  
 ### Known issues
- - JPA does not get primary key "seek" in Postgres  
+ - JPA/Postgres primary index track mismatch   
