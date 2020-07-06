@@ -2,7 +2,7 @@ version: "2.2"
 services:
   db:
     image: postgres:12
-    container_name: communa_db
+    container_name: db
     volumes:
       - ../postgres-data:/var/lib/postgresql/data
     expose:
@@ -15,7 +15,7 @@ services:
 
   webapp:
     build: .
-    container_name: communa_web
+    container_name: web
     expose:
       - 8000
     ports:
@@ -27,7 +27,7 @@ services:
       - DB_NAME=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=db_password
-      - FILLER_ACCESS_TOKEN=d253377f0f48c9c972228fb3719b8f4e
+      - FIXER_ACCESS_TOKEN=d253377f0f48c9c972228fb3719b8f4e
     depends_on:
       - db
     links:
