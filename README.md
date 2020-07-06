@@ -25,6 +25,7 @@ Note: Admin user admin/Admin@123 added by default
 ### TODO
  - Time series database is better solution to store exchange rates
  - Group API urls in constants
+ - Add tests for security
  
 ### Known issues
  - JPA/Postgres primary index track mismatch   
