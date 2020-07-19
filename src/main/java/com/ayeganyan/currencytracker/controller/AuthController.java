@@ -4,63 +4,42 @@ import com.ayeganyan.currencytracker.auth.JwtUtil;
 import com.ayeganyan.currencytracker.model.Credential;
 import com.ayeganyan.currencytracker.model.JwtToken;
 import com.ayeganyan.currencytracker.service.CredentialService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
+import java.util.Objects;
 
-@RestController
-public class AuthController {
+@Component
+public class AuthController implements IAuthController{
 
-    @Autowired
-    private CredentialService credentialService;
+    private final CredentialService credentialService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
+    public AuthController(@Autowired CredentialService credentialService,
+                          @Autowired AuthenticationManager authenticationManager,
+                          @Autowired JwtUtil jwtUtil) {
+        this.credentialService = Objects.requireNonNull(credentialService);
+        this.authenticationManager = Objects.requireNonNull(authenticationManager);
+        this.jwtUtil = Objects.requireNonNull(jwtUtil);
+    }
 
-    @ApiOperation(
-            value = "Registers new credential",
-            response = Credential.class,
-            produces = "application/json"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "New credential has been successfully added"),
-            @ApiResponse(code = 409, message = "Provided username is already in use")
-    })
-    @PostMapping("/v1/auth/signup")
-    ResponseEntity<Credential> signup(
-            @Valid
-            @RequestBody Credential credential) {
+    @Override
+    public ResponseEntity<Credential> signup(Credential credential) {
         Credential savedCredential = credentialService.signup(credential);
 
         return new ResponseEntity<>(savedCredential, HttpStatus.CREATED);
     }
 
-    @ApiOperation(
-            value = "Generates Jwt Authentication token",
-            response = JwtToken.class,
-            produces = "application/json"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful generation of JWT token. Use token for Bearer Authentication"),
-            @ApiResponse(code = 409, message = "Provided username is already in use")
-    })
-    @PostMapping("/v1/auth/authenticate")
-    ResponseEntity<JwtToken> authenticate(@RequestBody Credential credential) {
+    @Override
+    public ResponseEntity<JwtToken> authenticate(Credential credential) {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 credential.getUsername(), credential.getPassword())
