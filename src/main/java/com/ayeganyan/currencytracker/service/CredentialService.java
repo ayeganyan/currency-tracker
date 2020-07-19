@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.ayeganyan.currencytracker.auth.SecurityProvider.getPasswordEncoder;
 import static java.lang.String.format;
@@ -21,11 +22,15 @@ import static java.lang.String.format;
 @Service
 public class CredentialService implements UserDetailsService {
 
-    @Autowired
-    private CredentialRepository credentialRepository;
+    private final CredentialRepository credentialRepository;
 
-    @Autowired
-    private AuthGroupRepository authGroupRepository;
+    private final AuthGroupRepository authGroupRepository;
+
+    public CredentialService(@Autowired CredentialRepository credentialRepository,
+                             @Autowired AuthGroupRepository authGroupRepository) {
+        this.credentialRepository = Objects.requireNonNull(credentialRepository);
+        this.authGroupRepository = Objects.requireNonNull(authGroupRepository);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
